@@ -3,6 +3,11 @@ from constants import *
 from circleshape import CircleShape
 from player import Player
 
+# Create groups
+updatables = pygame.sprite.Group()
+drawables = pygame.sprite.Group()
+Player.containers = (updatables, drawables)
+
 def main():
     # Initialize
     pygame.init()
@@ -15,14 +20,21 @@ def main():
 
     # Game loop
     while True:
+        # Quit with window X
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
+        # Update
         screen.fill((0, 0, 0))
         dt = time.tick(60) / 1000
-        player.update(dt)
-        player.draw(screen)
+        updatables.update(dt)
+
+        # Draw
+        for drawable in drawables:
+            drawable.draw(screen)
         pygame.display.flip()
+
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
