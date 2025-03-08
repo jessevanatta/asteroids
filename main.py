@@ -1,6 +1,7 @@
 import pygame
 import sys
 from constants import *
+from scorekeeper import Score
 from circleshape import CircleShape
 from player import Player, Shot
 from asteroid import Asteroid
@@ -15,6 +16,7 @@ Player.containers = (updatables, drawables)
 Asteroid.containers = (asteroids, updatables, drawables)
 AsteroidField.containers = (updatables,)
 Shot.containers = (shots, updatables, drawables)
+Score.containers = (updatables, drawables)
 
 def main():
     # Initialize
@@ -23,6 +25,8 @@ def main():
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     field = AsteroidField()
+    score_font = pygame.font.Font()
+    score = Score(0, score_font)
 
     #Create player
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -59,10 +63,6 @@ def main():
         for drawable in drawables:
             drawable.draw(screen)
         pygame.display.flip()
-
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
 
 if __name__ == "__main__":
     main()
